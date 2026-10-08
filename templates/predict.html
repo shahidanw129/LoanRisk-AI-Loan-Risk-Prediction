@@ -1,0 +1,101 @@
+
+{% extends "base.html" %}
+{% block title %}LoanRisk AI | Predict{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div><span class="eyebrow">PREDICT</span><h1>Loan Risk Prediction</h1><p>Enter applicant details and let the trained model estimate risk.</p></div>
+</section>
+
+<section class="predict-layout">
+  <form id="predictForm" class="card form-card">
+    <div class="card-title"><span class="title-icon">♟</span><div><h2>Enter Applicant Details</h2><p>All fields are required for a prediction.</p></div></div>
+    <div class="form-grid">
+      <label>Age<input name="age" type="number" min="18" max="100" value="28" required></label>
+      <label>Annual Income (₹)<input name="income" type="number" min="1" value="600000" required></label>
+      <label>Loan Amount (₹)<input name="loan_amount" type="number" min="1" value="200000" required></label>
+      <label>Credit Score<input name="credit_score" type="number" min="300" max="850" value="720" required></label>
+      <label>Employment Status<select name="employment"><option>Salaried</option><option>Self-Employed</option><option>Business</option><option>Other</option></select></label>
+      <label>Loan Term (Months)<select name="loan_term"><option>12</option><option>18</option><option>24</option><option selected>36</option><option>48</option><option>60</option></select></label>
+      <label>Previous Loan History<select name="previous_history"><option>No</option><option>Yes</option></select></label>
+      <label>Debt to Income Ratio<input name="dti" type="number" min="0.01" max="1" step="0.01" value="0.30" required></label>
+    </div>
+    <div id="formError" class="form-error hidden"></div>
+    <button class="btn btn-primary predict-btn" type="submit"><span>⌁</span> Predict Loan Risk</button>
+  </form>
+
+  <section class="card result-card" id="resultCard">
+    <div class="card-title"><span class="title-icon green-bg">✓</span><div><h2>Prediction Result</h2><p>Model output and supporting indicators</p></div></div>
+    <div id="resultEmpty" class="result-empty">
+      <div class="empty-shield">◇</div>
+      <h3>Ready for prediction</h3>
+      <p>Enter the applicant details and click <strong>Predict Loan Risk</strong>.</p>
+    </div>
+    <div id="resultContent" class="hidden">
+      <div id="riskBanner" class="risk-banner">
+        <div id="riskIcon" class="risk-icon">✓</div>
+        <div><strong id="riskTitle">Low Risk</strong><p id="riskText">This applicant is likely to repay the loan.</p></div>
+      </div>
+      <div class="prob-list">
+        <div><span>Probability (Low Risk)</span><strong id="lowProb">0%</strong></div>
+        <div><span>Probability (Medium Risk)</span><strong id="medProb">0%</strong></div>
+        <div><span>Probability (High Risk)</span><strong id="highProb">0%</strong></div>
+      </div>
+      <div class="factor-list">
+        <div><span>Credit Score Impact</span><strong id="creditFactor">—</strong></div>
+        <div><span>Income Stability</span><strong id="incomeFactor">—</strong></div>
+        <div><span>Loan Amount Risk</span><strong id="loanFactor">—</strong></div>
+        <div><span>Overall Assessment</span><strong id="assessmentFactor">—</strong></div>
+      </div>
+    </div>
+  </section>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+document.getElementById("predictForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const error = document.getElementById("formError");
+  error.classList.add("hidden");
+  const payload = Object.fromEntries(new FormData(form).entries());
+
+  try {
+    const res = await fetch("{{ url_for('predict') }}", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok || !data.ok) {
+      error.textContent = (data.errors || ["Something went wrong."]).join(" ");
+      error.classList.remove("hidden");
+      return;
+    }
+
+    document.getElementById("resultEmpty").classList.add("hidden");
+    document.getElementById("resultContent").classList.remove("hidden");
+
+    const risk = data.risk;
+    const banner = document.getElementById("riskBanner");
+    banner.className = "risk-banner " + risk.toLowerCase().replace(" ", "-");
+    document.getElementById("riskTitle").textContent = risk;
+    document.getElementById("riskText").textContent =
+      risk === "Low Risk" ? "This applicant is likely to repay the loan."
+      : risk === "Medium Risk" ? "This application should receive additional review."
+      : "This application shows several higher-risk indicators.";
+
+    document.getElementById("riskIcon").textContent = risk === "High Risk" ? "!" : (risk === "Medium Risk" ? "!" : "✓");
+    document.getElementById("lowProb").textContent = data.probabilities["Low Risk"].toFixed(1) + "%";
+    document.getElementById("medProb").textContent = data.probabilities["Medium Risk"].toFixed(1) + "%";
+    document.getElementById("highProb").textContent = data.probabilities["High Risk"].toFixed(1) + "%";
+    document.getElementById("creditFactor").textContent = data.factors.credit;
+    document.getElementById("incomeFactor").textContent = data.factors.income;
+    document.getElementById("loanFactor").textContent = data.factors.loan_amount;
+    document.getElementById("assessmentFactor").textContent = data.factors.assessment;
+  } catch (err) {
+    error.textContent = "Unable to reach the Flask server. Please try again.";
+    error.classList.remove("hidden");
+  }
+});
+</script>
+{% endblock %}

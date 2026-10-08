@@ -1,0 +1,18 @@
+
+{% extends "base.html" %}
+{% block title %}LoanRisk AI | Usage Guide{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div><span class="eyebrow">GUIDE</span><h1>How to Use</h1><p>Follow these simple steps to explore the LoanRisk AI application.</p></div>
+</section>
+<section class="guide-layout">
+  <div class="card steps-card">
+    <div class="step"><b>1</b><div><h3>Enter applicant details</h3><p>Open the Predict page and enter the applicant's financial and profile information.</p></div></div>
+    <div class="step"><b>2</b><div><h3>Click Predict Loan Risk</h3><p>The Flask application sends the form data to the trained Random Forest model.</p></div></div>
+    <div class="step"><b>3</b><div><h3>View the risk category</h3><p>Review the predicted category and model probability percentages.</p></div></div>
+    <div class="step"><b>4</b><div><h3>Explore data insights</h3><p>Use the Analysis page to understand patterns in the training dataset.</p></div></div>
+    <div class="step"><b>5</b><div><h3>Learn about the project</h3><p>Visit About for the dataset, model, accuracy and technology details.</p></div></div>
+  </div>
+  <div class="card note-card"><div class="bulb">💡</div><h2>Educational Note</h2><p>This project is intended for educational and learning purposes. It uses a reproducible sample dataset and a machine learning model. It is not a real financial approval system.</p></div>
+</section>
+{% endblock %}

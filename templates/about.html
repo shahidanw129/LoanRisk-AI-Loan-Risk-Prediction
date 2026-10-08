@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+{% block title %}LoanRisk AI | About{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div><span class="eyebrow">ABOUT</span><h1>About This Project</h1><p>A complete educational loan-risk prediction application built with Flask and Machine Learning.</p></div>
+</section>
+<section class="about-grid">
+  <div class="card about-main">
+    <div class="about-icon">i</div>
+    <h2>LoanRisk AI</h2>
+    <p>This project uses Machine Learning to predict the risk category of a loan applicant based on financial and personal features. It combines a trained Random Forest model, Flask APIs, dataset-driven analytics and a responsive UI.</p>
+    <div class="info-panel">
+      <h3>Dataset Information</h3>
+      <div class="info-row"><span>Total Records</span><strong>{{ "{:,}".format(record_count) }}</strong></div>
+      <div class="info-row"><span>Features Used</span><strong>8</strong></div>
+      <div class="info-row"><span>Target Variable</span><strong>Loan Risk</strong></div>
+      <div class="info-row"><span>Model Used</span><strong>Random Forest Classifier</strong></div>
+      <div class="info-row"><span>Model Accuracy</span><strong>{{ model_accuracy }}%</strong></div>
+    </div>
+  </div>
+  <div class="card tech-card">
+    <h2>Technologies Used</h2>
+    <div class="tech-grid">
+      <div><span>🐍</span><strong>Python</strong></div>
+      <div><span>▦</span><strong>Pandas</strong></div>
+      <div><span>◒</span><strong>Matplotlib</strong></div>
+      <div><span>◎</span><strong>Scikit-learn</strong></div>
+      <div><span>◈</span><strong>Flask</strong></div>
+    </div>
+  </div>
+</section>
+{% endblock %}

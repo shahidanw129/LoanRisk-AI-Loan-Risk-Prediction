@@ -1,0 +1,40 @@
+
+{% extends "base.html" %}
+{% block title %}LoanRisk AI | Home{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">MACHINE LEARNING • LOAN DECISION SUPPORT</span>
+    <h1>Loan Risk Prediction<br><span>and Analysis</span></h1>
+    <p>Use Machine Learning to predict loan risk and analyze key factors that influence loan approval.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-lg" href="{{ url_for('predict') }}">Predict Now <span>→</span></a>
+      <a class="btn btn-outline btn-lg" href="{{ url_for('analysis') }}">View Analysis</a>
+    </div>
+  </div>
+  <div class="hero-art">
+    <div class="art-glow"></div>
+    <div class="bank">
+      <div class="bank-roof">LOAN</div>
+      <div class="bank-pillars"><i></i><i></i><i></i><i></i></div>
+      <div class="bank-base"></div>
+      <div class="coin coin-a">₹</div>
+      <div class="coin coin-b">₹</div>
+      <div class="check">✓</div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-grid">
+  <div class="stat-card"><div class="stat-icon blue">♟</div><div><strong>{{ "{:,}".format(record_count) }}+</strong><span>Loan Records</span><small>Training Dataset</small></div></div>
+  <div class="stat-card"><div class="stat-icon green">▥</div><div><strong>{{ model_accuracy }}%</strong><span>Model Accuracy</span><small>Machine Learning</small></div></div>
+  <div class="stat-card"><div class="stat-icon purple">▤</div><div><strong>{{ feature_count }}</strong><span>Key Features</span><small>Used for Prediction</small></div></div>
+  <div class="stat-card"><div class="stat-icon red">⬟</div><div><strong>3</strong><span>Risk Categories</span><small>Low, Medium, High</small></div></div>
+</section>
+
+<section class="feature-strip">
+  <div><span class="feature-number">01</span><div><h3>Real ML Prediction</h3><p>Predictions come from a trained Random Forest classifier.</p></div></div>
+  <div><span class="feature-number">02</span><div><h3>Data Insights</h3><p>Explore dataset-driven charts and risk patterns.</p></div></div>
+  <div><span class="feature-number">03</span><div><h3>Decision Support</h3><p>See risk probabilities and interpretable indicators.</p></div></div>
+</section>
+{% endblock %}

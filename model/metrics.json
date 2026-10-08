@@ -1,0 +1,56 @@
+{
+  "accuracy": 0.8726190476190476,
+  "test_records": 840,
+  "total_records": 4200,
+  "features": 8,
+  "classification_report": {
+    "High Risk": {
+      "precision": 0.810126582278481,
+      "recall": 0.7619047619047619,
+      "f1-score": 0.7852760736196319,
+      "support": 84.0
+    },
+    "Low Risk": {
+      "precision": 0.9415929203539823,
+      "recall": 0.9316987740805605,
+      "f1-score": 0.9366197183098591,
+      "support": 571.0
+    },
+    "Medium Risk": {
+      "precision": 0.6989795918367347,
+      "recall": 0.7405405405405405,
+      "f1-score": 0.7191601049868767,
+      "support": 185.0
+    },
+    "accuracy": 0.8726190476190476,
+    "macro avg": {
+      "precision": 0.8168996981563993,
+      "recall": 0.8113813588419543,
+      "f1-score": 0.8136852989721226,
+      "support": 840.0
+    },
+    "weighted avg": {
+      "precision": 0.8750135891944194,
+      "recall": 0.8726190476190476,
+      "f1-score": 0.8735924628113699,
+      "support": 840.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      532,
+      39,
+      0
+    ],
+    [
+      33,
+      137,
+      15
+    ],
+    [
+      0,
+      20,
+      64
+    ]
+  ]
+}
